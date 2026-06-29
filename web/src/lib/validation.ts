@@ -51,3 +51,30 @@ export function validateSignupForm(
 export function hasFieldErrors(errors: SignupFieldErrors): boolean {
   return Object.keys(errors).length > 0
 }
+
+export type LoginFormData = {
+  email: string
+  password: string
+}
+
+export type LoginFieldErrors = Partial<Record<keyof LoginFormData, string>>
+
+export function validateLoginForm(data: LoginFormData): LoginFieldErrors {
+  const errors: LoginFieldErrors = {}
+
+  if (!data.email.trim()) {
+    errors.email = 'Email is required'
+  } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email.trim())) {
+    errors.email = 'Enter a valid email address'
+  }
+
+  if (!data.password) {
+    errors.password = 'Password is required'
+  }
+
+  return errors
+}
+
+export function hasLoginFieldErrors(errors: LoginFieldErrors): boolean {
+  return Object.keys(errors).length > 0
+}

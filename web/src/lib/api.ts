@@ -1,4 +1,4 @@
-import type { ApiErrorResponse, SignupRequest, SignupResponse } from '../types/auth'
+import type { ApiErrorResponse, LoginRequest, LoginResponse, SignupRequest, SignupResponse } from '../types/auth'
 import { ApiError } from '../types/auth'
 
 const API_BASE = '/api'
@@ -32,4 +32,20 @@ export async function signup(data: SignupRequest): Promise<SignupResponse> {
   }
 
   return (await response.json()) as SignupResponse
+}
+
+export async function login(data: LoginRequest): Promise<LoginResponse> {
+  const response = await fetch(`${API_BASE}/auth/login`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(data),
+  })
+
+  if (!response.ok) {
+    throw await parseErrorResponse(response)
+  }
+
+  return (await response.json()) as LoginResponse
 }

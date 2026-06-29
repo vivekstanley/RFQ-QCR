@@ -6,15 +6,16 @@ import {
   useState,
   type ReactNode,
 } from 'react'
-import { signup as signupRequest } from '../lib/api'
+import { login as loginRequest, signup as signupRequest } from '../lib/api'
 import { clearAuthSession, getStoredToken, getStoredUser, saveAuthSession } from '../lib/auth-storage'
-import type { PublicUser, SignupRequest } from '../types/auth'
+import type { LoginRequest, PublicUser, SignupRequest } from '../types/auth'
 
 type AuthContextValue = {
   user: PublicUser | null
   token: string | null
   isAuthenticated: boolean
   signup: (data: SignupRequest) => Promise<PublicUser>
+  login: (data: LoginRequest, options?: { remember?: boolean }) => Promise<PublicUser>
   logout: () => void
 }
 
@@ -26,7 +27,15 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   const signup = useCallback(async (data: SignupRequest) => {
     const response = await signupRequest(data)
-    saveAuthSession(response.token, response.user)
+    saveAuthSession(response.token, response.user, { remember: true })
+    setToken(response.token)
+    setUser(response.user)
+    return response.user
+  }, [])
+
+  const login = useCallback(async (data: LoginRequest, options?: { remember?: boolean }) => {
+    const response = await loginRequest(data)
+    saveAuthSession(response.token, response.user, { remember: options?.remember ?? true })
     setToken(response.token)
     setUser(response.user)
     return response.user
@@ -44,9 +53,10 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       token,
       isAuthenticated: Boolean(user && token),
       signup,
+      login,
       logout,
     }),
-    [user, token, signup, logout],
+    [user, token, signup, login, logout],
   )
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>

@@ -5,7 +5,7 @@ Landing page and authentication UI for the RFQ-QCR application, styled with the 
 ## Pages
 
 - `/` — Landing page with product overview and MVP workflow
-- `/login` — User login
+- `/login` — User login (authenticates via API)
 - `/signup` — User registration (creates account via API)
 - `/dashboard` — Post-signup welcome page (protected)
 
