@@ -20,14 +20,13 @@ export function DashboardPage() {
       <main className="flex flex-1 items-center justify-center px-6 py-12">
         <div className="w-full max-w-lg rounded-md border border-neutral-200 bg-white p-8 shadow-card">
           <p className="text-caption font-medium uppercase tracking-wider text-primary-600">
-            Account created
+            Dashboard
           </p>
           <h1 className="mt-2 text-h2 font-medium text-neutral-700">
-            Welcome, {user?.fullName}
+            Welcome back, {user?.fullName}
           </h1>
           <p className="mt-3 text-body text-neutral-500">
-            Your RFQ-QCR account is ready. You can now connect your LLM account and start
-            managing RFQs.
+            You are signed in to RFQ-QCR. Connect your LLM account and start managing RFQs.
           </p>
 
           <dl className="mt-6 space-y-3 rounded-md bg-neutral-50 p-4 text-body">

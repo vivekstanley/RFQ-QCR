@@ -58,4 +58,38 @@ Create a new user account.
 - `400` — validation failed (`fields` object with per-field messages)
 - `409` — email already registered (`field: "email"`)
 
+### `POST /api/auth/login`
+
+Log in with an existing account.
+
+**Request body:**
+
+```json
+{
+  "email": "jane@acme.com",
+  "password": "securePass1"
+}
+```
+
+**Success (`200`):**
+
+```json
+{
+  "message": "Logged in successfully",
+  "user": {
+    "id": "uuid",
+    "fullName": "Jane Smith",
+    "company": "Acme Insurance",
+    "email": "jane@acme.com",
+    "createdAt": "2026-06-29T18:00:00.000Z"
+  },
+  "token": "jwt-token"
+}
+```
+
+**Errors:**
+
+- `400` — validation failed (`fields` object with per-field messages)
+- `401` — invalid email or password
+
 User data is stored in SQLite at `server/data/rfq-qcr.db`.

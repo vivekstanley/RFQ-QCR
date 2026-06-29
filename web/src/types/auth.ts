@@ -19,6 +19,13 @@ export type SignupResponse = {
   token: string
 }
 
+export type LoginRequest = {
+  email: string
+  password: string
+}
+
+export type LoginResponse = SignupResponse
+
 export type ApiErrorResponse = {
   message: string
   field?: string
